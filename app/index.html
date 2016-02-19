@@ -5,64 +5,61 @@
   <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js'></script>
   <script src='js/controllers.js'></script>
 </head>
-<!-- as we are accessing the contoller everywhere, we are going to bring
-     the controller directive up to the body tag -->
 <body ng-controller='StoreController as store'>
   <h1>Welcome to our {{store.store}} </h1>
   <h2> Our Products </h2>
   <ul>
-    <li>
-      {{store.productOne.name}} Cost: {{store.productOne.cost}}
+    <!-- There is a lot of replication in this code. Let's dry it up by moving our
+         products to an array in the controller, and using ng-repeat to loop through
+         it. the syntax is very much like a for each loop-->
+    <li ng-repeat='product in store.products'>
+      {{product.name}} Cost: {{product.cost}}
     </li>
-    <li>
-      {{store.productTwo.name}} Cost: {{store.productTwo.cost}}
-    </li>
-  </ul>
-  <!-- So far we have only worked with one way data bindings. This is where data flows in one direction
-       from the controller/viewModel to the template. The real power of angular comes to play when we
-       create two way data bindings that allow us to also set data in the template, and propogate this
-       data change to the controller. (Interlude to draw one way vs two way data binding on the board)
-  -->
-  <!-- For example, let's allow the user to change the name of our store 
-       To do this we will create a input element and also use the ng-model directive
-  -->
-  <input ng-model='store.store'>
-  <!-- (demo the live instant change) -->
-  <!-- ng-model creates a two way data binding, where as ng-bind/inlineExpressions creates a one way data binding. The two
-       way binding allows change to flow both ways, and a one way binding only uupdates the template
-  -->
-  <!-- ng-bind works by writing the data into the content of the dom node. As input is a void element - meaning one that 
-       cannot have content - ng-bind will not work with it, not even in a one way data binding sense
-  -->
-  <input ng-bind='store.store'>
-  <!-- In comparison, ng-model doesn't transfer data to the content of an element, so it won't work on elements such a p tags
-  -->
-  <p ng-model='store.store'></p>
-  <!-- Generally speaking, you can follow your commen sense here. If it's an element such as input or select, it will work
-       with ng-model as that makes sense. If it's a read only element such as p or h1, only ng-bind will work.
-  -->
-  <!-- Lab: Go through the various standard html elements with a partner, and guess which elements will work with
-    ng-model, and which with ng-bind; test your assertiongs afterward 
-  -->
-  
-  <!-- Another benefit of controller as syntax is it makes nesting and shadowing scopes much easier -->
-  <div ng-controller='StoreController as store2'>
-    <p>store name: {{store.store}}</p>
-    <p>store2 name: {{store2.store}}</p>
-    <input ng-model='store2.store'>
-  </div>
-  <!-- Deomnstarte how we now have two different instances of our store controller, and we can change them
-    independent from each other -->
-  <!-- Lab experiment with having multiple instances of the same controller in your app -->
-  <!-- just like in javascript we can shadow scopes as well (define variable shadowing) -->
-  <div ng-controller='StoreController as store'>
-    <p>store name: {{store.store}}</p>
-    <input ng-model='store.store'>
-  </div>
-  <!-- notice how even though that input appears to have th same model as the one we use above, it 
-    doesn't modify the above text? This is because of the variable shadowing -->
-    <!-- Lab experiment with an extremely nested scope of at least 5 levels, and one instance of shadowing -->
+    <!-- lab convert your store tu use ng-repeat -->
 
+    <!-- ng-repeat also brings in some helper objects to assist with things such as 
+      array indexing  -->
   
+    <li ng-repeat='product in store.products'>
+      Item Number: {{$index}} | {{product.name}} Cost: {{product.cost}}
+    </li>
+
+    <!-- some other helpers -->
+    <li ng-repeat='product in store.products'>
+      Item Number: {{$even}} | {{product.name}} Cost: {{product.cost}}
+    </li>
+
+    <li ng-repeat='product in store.products'>
+      Item Number: {{$odd}} | {{product.name}} Cost: {{product.cost}}
+    </li>
+
+    <li ng-repeat='product in store.products'>
+      Item Number: {{$first}} | {{product.name}} Cost: {{product.cost}}
+    </li>
+
+    <li ng-repeat='product in store.products'>
+      Item Number: {{$last}} | {{product.name}} Cost: {{product.cost}}
+    </li>
+
+    <li ng-repeat='product in store.products'>
+      Item Number: {{$middle}} | {{product.name}} Cost: {{product.cost}}
+    </li>
+
+    <!-- Aside from $index, therse are all predicates (return true or false). Alone, they aren't very useful.
+      However, we can combine them with ng-if, which is a directive to conditionally display
+      dom nodes -->
+    <li ng-repeat='product in store.products' ng-if='$first'>
+      {{product.name}} Cost: {{product.cost}}
+    </li>
+    <!-- here we will only display the first element in a list. Later on we will discuss how to use
+         ng-repeat filters as a more elegant way to do this -->
+    <!-- Create a section that only displays even indexed products. Create one that displays only the last one
+         Crate one using $index and $ng-if that only displays the 2nd element -->
+
+    <li ng-repeat='product in store.products' ng-if='$index == 1'>
+      {{product.name}} Cost: {{product.cost}}
+    </li>
+
+  </ul>
 </body>
 </html>
