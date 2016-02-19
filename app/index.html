@@ -9,44 +9,10 @@
   <h1>Welcome to our {{store.store}} </h1>
   <h2> Our Products </h2>
   <ul>
-    <!-- we can use ng-filter to allow us to only include elements
-         that match a query -->
     <li ng-repeat='product in store.products | filter:query'>
       {{product.name}} Cost: {{product.cost}}
     </li>
     <input ng-model='query'>
   </ul>
-  <!-- lab add search filter to your store app -->
-    <!-- notice how the default filter will search for a match in
-         each value property of the object. Meaning in the above that 
-         it will loook for a match in both name and cost. We can
-         specify that we only want the filter to consider the name
-         property -->
-    <li ng-repeat='product in store.products | filter:{name: query2}'>
-      {{product.name}} Cost: {{product.cost}}
-    </li>
-    <input ng-model='query2'>
-    <!-- lab add a filter that filters based on product cost to your app -->
-
-    <!-- just like in SQL, we can use orderby to order our list items based
-         on a property -->
-    <li ng-repeat='product in store.products | orderBy: "cost"'>
-      {{product.name}} Cost: {{product.cost}}
-    </li>
-    <!-- we can add a - to the property name in orderBy to reverse the order -->
-    <li ng-repeat='product in store.products | orderBy: "-cost"'>
-      {{product.name}} Cost: {{product.cost}}
-    </li>
-
-    <!-- Lab expermeint with order by in your app -->
-
-    <!-- we can also combine them filter and orderby together -->
-    <li ng-repeat='product in store.products | filter:{cost: query3} | orderBy: "-name"'>
-      {{product.name}} Cost: {{product.cost}}
-    </li>
-    <input ng-model='query3'>
-    
-    <!-- Lab experiment with combining filter and orderBy on your app -->
-
 </body>
 </html>
