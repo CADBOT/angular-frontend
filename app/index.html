@@ -6,6 +6,43 @@
   <script src='js/controllers.js'></script>
 </head>
 <body>
-  <h1>Welcome to our {{'store'}} </h1>
+  <!-- Can initial variables in templates (not advised in most cases) 
+       This is to showcase how one can do lots in angular without even
+       touching javascript, if they so desired
+  -->
+  <h1 ng-init='store = "everything store"'>Welcome to our {{store}} </h1>
+  <!-- Demonstrate how you can assign more than simple strings in ng-init -->
+  <div ng-init='products = [{name: "iphone 6", cost: 300}, {name: "soap", cost: 2}]'>
+    <h2> Our Products </h2>
+    <ul>
+      <li>
+        {{products[0].name}} Cost: {{products[0].cost}}
+      </li>
+      <!-- Alternatively, This can also be done with ng-bind instead of {{}} 
+           but will only allow a simple insertion, and no templating
+      -->
+      <li ng-bind=products[0]> 
+      </li>
+      <!-- However, there is an ng-bind-temmplate as well -->
+      <li ng-bind-template='{{products[0].name}} Cost: {{products[0].cost}}'>
+      </li>
+      <!-- Dicuss why are three different ways to do this, and how if the script
+           tags are in the body instead of head with {{}} it can lead to "flashing"
+      -->
+
+      <!-- {{}} Are Angular expressions. Mostly smiliar to javascript expressions
+           but more forgiving(no ref or type errors with nulls), as well as
+           more limited(no control flow statements or function declarations)
+      -->
+      <li>
+        {{products[1].name}} Cost: {{products[1].cost + 20}}
+      </li>
+    </ul>
+  </div>
+  <!-- Lab
+    Give 10-15 minutes for students to create there own store app. It should have 3 
+    products and be done purely with ng-init, ng-bind and ng-bind-template
+    Students should also experiment with evaluating Angular Expressions
+  -->
 </body>
 </html>
