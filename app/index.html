@@ -14,5 +14,17 @@
     </li>
     <input ng-model='query'>
   </ul>
+  <!-- Let's create a form to add a new product. Usually this would be done on a seperate page, but due to time contraints
+       of the 1 day format we'll add it here
+  -->
+  <h2> Add a New Product </h2>
+  <section ng-controller='ProductController as product'>
+    <form>
+      <label>Product Name: </label> <input ng-model='product.name'> <br />
+      <label>Cost : </label>        <input ng-model='product.cost'> <br />
+    </form>
+    <button ng-click='product.submit()'>Submit</button>
+    <p ng-show='product.errorMessage != ""'>Error: {{product.errorMessage}} </p>
+  </section>
 </body>
 </html>
