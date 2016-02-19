@@ -6,39 +6,28 @@
   <script src='js/controllers.js'></script>
 </head>
 <body>
-<!-- A better and more natural way to initialize data is through javascript
-     We will now start using the js/controllers.js file. In there we will 
-     create a contoller, and create teh variables there -->
-<!-- we can use a controller with the ng-controller directive This will
-     inject the variables we declared on $scope, and make them available
-     for our use -->
-<!-- The variables created inside the Phone Controller will be available
-     insde the element we wplace the ng-contoller directive in, and all
-     of it's children directives-->
-  <section ng-controller='StoreController'>
-    <h1>Welcome to our {{store}} </h1>
+<!-- While you'll often encouter $scope out in wild and in docs, the preferred way to use
+     controllers is with controller as syntax. This will require some changes in our 
+     controller as well
+-->
+  <section ng-controller='StoreController as store'>
+    <!-- we know must prefix all of our scope accesses with store. while initially
+      this might as nothing but added verbosity, doing our templates this way makes
+      our code much more clear. People reading our code can now easily determine which
+      controller a variable came from, which comes in handy when we start nesting
+      scopes. Later on we'll see this alsy enables variable shadowing like in vanilla
+      javascript -->
+    <h1>Welcome to our {{store.store}} </h1>
     <h2> Our Products </h2>
     <ul>
       <li>
-        {{productOne.name}} Cost: {{productOne.cost}}
+        {{store.productOne.name}} Cost: {{store.productOne.cost}}
       </li>
       <li>
-        {{productTwo.name}} Cost: {{productTwo.cost}}
+        {{store.productTwo.name}} Cost: {{store.productTwo.cost}}
       </li>
     </ul>
   </section>
-  <!-- outside of the above element, we won't have access to the valued
-    defined by StoreController. ng-controller scoping is very much like
-    javascript function scoping -->
-  <p> After this colon there will be nothing: {{store}}</p>
-
-  <!-- However, we can create multiple instances of our controller, just like
-    how we can consume a vanilla js constructor function multiple times -->
-  <p ng-controller='StoreController'> After this colon there will be something: {{store}}</p>
-  <!-- Lab
-    Refactor your store app to use a controller instead. Experiment with the scoping
-    rules of ng-controller for yourself. Create multiple ng-controllers, and quiz a partner
-    on how the angular expressions will be evaluated
-  -->
+  <!-- lab break; Refactor your app to use controller as syntax -->
 </body>
 </html>
