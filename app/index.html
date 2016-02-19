@@ -9,57 +9,44 @@
   <h1>Welcome to our {{store.store}} </h1>
   <h2> Our Products </h2>
   <ul>
-    <!-- There is a lot of replication in this code. Let's dry it up by moving our
-         products to an array in the controller, and using ng-repeat to loop through
-         it. the syntax is very much like a for each loop-->
-    <li ng-repeat='product in store.products'>
+    <!-- we can use ng-filter to allow us to only include elements
+         that match a query -->
+    <li ng-repeat='product in store.products | filter:query'>
       {{product.name}} Cost: {{product.cost}}
     </li>
-    <!-- lab convert your store tu use ng-repeat -->
-
-    <!-- ng-repeat also brings in some helper objects to assist with things such as 
-      array indexing  -->
-  
-    <li ng-repeat='product in store.products'>
-      Item Number: {{$index}} | {{product.name}} Cost: {{product.cost}}
-    </li>
-
-    <!-- some other helpers -->
-    <li ng-repeat='product in store.products'>
-      Item Number: {{$even}} | {{product.name}} Cost: {{product.cost}}
-    </li>
-
-    <li ng-repeat='product in store.products'>
-      Item Number: {{$odd}} | {{product.name}} Cost: {{product.cost}}
-    </li>
-
-    <li ng-repeat='product in store.products'>
-      Item Number: {{$first}} | {{product.name}} Cost: {{product.cost}}
-    </li>
-
-    <li ng-repeat='product in store.products'>
-      Item Number: {{$last}} | {{product.name}} Cost: {{product.cost}}
-    </li>
-
-    <li ng-repeat='product in store.products'>
-      Item Number: {{$middle}} | {{product.name}} Cost: {{product.cost}}
-    </li>
-
-    <!-- Aside from $index, therse are all predicates (return true or false). Alone, they aren't very useful.
-      However, we can combine them with ng-if, which is a directive to conditionally display
-      dom nodes -->
-    <li ng-repeat='product in store.products' ng-if='$first'>
-      {{product.name}} Cost: {{product.cost}}
-    </li>
-    <!-- here we will only display the first element in a list. Later on we will discuss how to use
-         ng-repeat filters as a more elegant way to do this -->
-    <!-- Create a section that only displays even indexed products. Create one that displays only the last one
-         Crate one using $index and $ng-if that only displays the 2nd element -->
-
-    <li ng-repeat='product in store.products' ng-if='$index == 1'>
-      {{product.name}} Cost: {{product.cost}}
-    </li>
-
+    <input ng-model='query'>
   </ul>
+  <!-- lab add search filter to your store app -->
+    <!-- notice how the default filter will search for a match in
+         each value property of the object. Meaning in the above that 
+         it will loook for a match in both name and cost. We can
+         specify that we only want the filter to consider the name
+         property -->
+    <li ng-repeat='product in store.products | filter:{name: query2}'>
+      {{product.name}} Cost: {{product.cost}}
+    </li>
+    <input ng-model='query2'>
+    <!-- lab add a filter that filters based on product cost to your app -->
+
+    <!-- just like in SQL, we can use orderby to order our list items based
+         on a property -->
+    <li ng-repeat='product in store.products | orderBy: "cost"'>
+      {{product.name}} Cost: {{product.cost}}
+    </li>
+    <!-- we can add a - to the property name in orderBy to reverse the order -->
+    <li ng-repeat='product in store.products | orderBy: "-cost"'>
+      {{product.name}} Cost: {{product.cost}}
+    </li>
+
+    <!-- Lab expermeint with order by in your app -->
+
+    <!-- we can also combine them filter and orderby together -->
+    <li ng-repeat='product in store.products | filter:{cost: query3} | orderBy: "-name"'>
+      {{product.name}} Cost: {{product.cost}}
+    </li>
+    <input ng-model='query3'>
+    
+    <!-- Lab experiment with combining filter and orderBy on your app -->
+
 </body>
 </html>
